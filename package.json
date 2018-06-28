@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/niou-ns/homebridge-livolo.git"
+    "url": "git+ssh://git@github.com/niou-ns/homebridge-livolo.git"
   },
   "keywords": [
     "livolo",
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/niou-ns/homebridge-livolo#readme",
   "dependencies": {
-    "livolo": "git+https://github.com/codedealer/livolo.git"
+    "homebridge-platform-helper": "1.1.1",
+    "livolo": "1.0.0"
   }
 }
