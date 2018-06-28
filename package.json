@@ -1,0 +1,27 @@
+{
+  "name": "homebridge-livolo",
+  "version": "0.0.1",
+  "description": "Livolo RF plugin for Homebridge",
+  "main": "homebridge-livolo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niou-ns/homebridge-livolo.git"
+  },
+  "keywords": [
+    "livolo",
+    "homebridge"
+  ],
+  "author": "Krzysztof Pintscher",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/niou-ns/homebridge-livolo/issues"
+  },
+  "homepage": "https://github.com/niou-ns/homebridge-livolo#readme",
+  "dependencies": {
+    "homebridge-platform-helper": "^1.1.3",
+    "livolo": "git+https://github.com/codedealer/livolo.git"
+  }
+}
