@@ -12,12 +12,17 @@
   },
   "keywords": [
     "livolo",
-    "homebridge"
+    "homebridge",
+    "homebridge-plugin"
   ],
   "author": "Krzysztof Pintscher",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/niou-ns/homebridge-livolo/issues"
+  },
+  "engines": {
+    "homebridge": ">=0.2.0",
+    "node": ">=7.6.0"
   },
   "homepage": "https://github.com/niou-ns/homebridge-livolo#readme",
   "dependencies": {

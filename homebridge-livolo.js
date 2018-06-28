@@ -1,5 +1,4 @@
 const { HomebridgePlatform } = require('homebridge-platform-helper');
-// const { HomebridgeAccessory } = require('homebridge-platform-helper');
 
 const Livolo = require('livolo');
 const uuid = require('uuid');
@@ -28,51 +27,43 @@ const LivoloPlatform = class extends HomebridgePlatform {
 
     // Itterate through the config accessories
     config.accessories.forEach((accessory) => {
-      accessories.push(new LivoloSwitch(log, accessory, config));
+      accessories.push(new LivoloSwitch(log, config, accessory));
     })
   }
 }
 
-function LivoloSwitch(log, accessory, config)) {
-    this.log = log;
-    this.name = accessory.name;
-    this.config = config;
-    this.accessory = accessory;
 
-    this.homebridgeService = new Service.Switch(this.name);
-    this.homebridgeService.getCharacteristic(Characteristic.On)
-        .on("get", this.getStatus.bind(this))
-        .on("set", this.setStatus.bind(this));
+function LivoloSwitch(log, config, accessory) {
+
+  this.log = log;
+  this.name = accessory.name;
+  this.config = config;
+  this.accessory = accessory;
+  this.buttonState = false;
+
 }
 
-LivoloSwitch.prototype = {
-
-
-    getServices: () => {
-        return [this.homebridgeService];
-    },
-
-    getStatus: () => {
-      return true;
-    },
-
-    setStatus: () => {
-      Livolo.open(this.config.pin, this.config.options);
-      Livolo.sendButton(this.config.remoteId, this.accessory.buttonId);
-      Livolo.close();
-    }
-
-    // resetSwitchWithTimeout: function () {
-    //     this.log("Resetting switch to OFF");
-    //     setTimeout(function () {
-    //         this.homebridgeService.setCharacteristic(Characteristic.On, false);
-    //     }.bind(this), 1000);
-    //
-    // }
+LivoloSwitch.prototype.getOn = function(callback) {
+	callback(null, this.buttonState);
 }
+
+LivoloSwitch.prototype.setOn = function(on, callback) {
+  Livolo.open(this.config.pin, this.config.options);
+  Livolo.sendButton(this.config.remoteId, this.accessory.buttonId);
+  this.buttonState = !this.buttonState;
+  Livolo.close();
+	callback(null);
+}
+
+LivoloSwitch.prototype.getServices = function() {
+	var homebridgeService = new Service.Switch(this.name);
+	homebridgeService.getCharacteristic(Characteristic.On)
+		.on('get', this.getOn.bind(this))
+		.on('set', this.setOn.bind(this));
+	return [homebridgeService];
+}
+
 
 LivoloPlatform.setHomebridge = (homebridge) => {
   homebridgeRef = homebridge
 }
-
-module.exports = LivoloPlatform
