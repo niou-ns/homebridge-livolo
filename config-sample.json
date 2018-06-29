@@ -1,0 +1,32 @@
+{
+  "bridge":{
+    "name":"Homebridge",
+    "username":"CD:22:3D:E3:CE:30",
+    "port":51826,
+    "pin":"031-45-154"
+  },
+  "description":"Homebridge",
+  "accessories":[
+  ],
+  "platforms":[
+    {
+      "platform": "Livolo",
+      "name": "Livolo",
+      "debugMode": true,
+      "repeats": 150,
+      "pin": 11,
+      "remoteId": 7400,
+      "accessories": [
+        {
+          "name": "Livolo 1",
+          "buttonId": 0
+        },
+        {
+          "name": "Livolo 2",
+          "buttonId": 96,
+          "remoteId": 8500
+        }
+      ]
+    }
+   ]
+  }
