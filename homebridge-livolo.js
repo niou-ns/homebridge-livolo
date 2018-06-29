@@ -17,6 +17,21 @@ module.exports = (homebridge) => {
 const LivoloPlatform = class extends HomebridgePlatform {
 
   constructor (log, config = {}) {
+
+    if (config.debugMode === undefined) {
+      config.debugMode = false;
+    }
+    if (config.pin === undefined) {
+      config.pin = 11;
+    }
+    if (config.repeats === undefined) {
+      config.repeats = 150;
+    }
+    if (config.remoteId === undefined) {
+      config.remoteId = 7400;
+    }
+
+    Livolo.open(config.pin, { debugMode: config.debugMode, repeats: config.repeats });
     super(log, config, homebridgeRef);
   }
 
@@ -24,8 +39,6 @@ const LivoloPlatform = class extends HomebridgePlatform {
     const { config, log } = this;
 
     if (!config.accessories) config.accessories = []
-
-    // Itterate through the config accessories
     config.accessories.forEach((accessory) => {
       accessories.push(new LivoloSwitch(log, config, accessory));
     })
@@ -34,13 +47,13 @@ const LivoloPlatform = class extends HomebridgePlatform {
 
 
 function LivoloSwitch(log, config, accessory) {
-
   this.log = log;
   this.name = accessory.name;
   this.config = config;
   this.accessory = accessory;
   this.buttonState = false;
-
+  this.remoteId = accessory.remoteId ? accessory.remoteId : config.remoteId;
+  this.buttonId = accessory.buttonId;
 }
 
 LivoloSwitch.prototype.getOn = function(callback) {
@@ -48,10 +61,8 @@ LivoloSwitch.prototype.getOn = function(callback) {
 }
 
 LivoloSwitch.prototype.setOn = function(on, callback) {
-  Livolo.open(this.config.pin, this.config.options);
-  Livolo.sendButton(this.config.remoteId, this.accessory.buttonId);
+  Livolo.sendButton(this.remoteId, this.buttonId);
   this.buttonState = !this.buttonState;
-  Livolo.close();
 	callback(null);
 }
 
