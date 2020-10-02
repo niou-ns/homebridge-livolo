@@ -27,6 +27,7 @@
   "homepage": "https://github.com/niou-ns/homebridge-livolo#readme",
   "dependencies": {
     "homebridge-platform-helper": "1.1.1",
-    "livolo": "1.0.0"
+    "livolo": "^1.0.0",
+    "rpio": "^2.1.1"
   }
 }
